@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     tools {
-    maven 'Maven-3.9'
+        maven 'Maven-3.9'
     }
 
     options {
@@ -22,14 +22,20 @@ pipeline {
                 sh 'mvn -B clean compile'
             }
         }
+        
         stage('Pruebas') {
             steps {
-                sh 'mvn -B test -Dmaven.test.failure.ignore=true'
+                // Sin el failure.ignore para que respete el Defecto 4
+                sh 'mvn -B test'
             }
             post {
-        always {
-            junit 'target/surefire-reports/*.xml'
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
         }
+        
+        // La nueva etapa va completamente separada de las demás
         stage('Cobertura') {
             steps {
                 sh 'mvn -B verify'
@@ -40,9 +46,7 @@ pipeline {
                 }
             }
         }
-    }
-            
-        }
+        
         stage('Empaquetar') {
             steps {
                 sh 'mvn -B -DskipTests package'
