@@ -26,4 +26,10 @@ public class CalculadoraDescuentos {
     private double redondear(double valor) {
     return Math.round(valor * 100.0) / 100.0;
     }
+    public double aplicarDescuentoPorCantidad(int cantidad, double precio) {
+    if (cantidad > 10) {
+        return precio * 0.90; // 10% de descuento
+    }
+    return precio;
+}
 }

@@ -30,6 +30,16 @@ pipeline {
         always {
             junit 'target/surefire-reports/*.xml'
         }
+        stage('Cobertura') {
+            steps {
+                sh 'mvn -B verify'
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'target/site/jacoco/**/*', fingerprint: true
+                }
+            }
+        }
     }
             
         }
