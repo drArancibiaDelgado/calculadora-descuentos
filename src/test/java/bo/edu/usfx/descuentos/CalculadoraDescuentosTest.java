@@ -53,4 +53,19 @@ class CalculadoraDescuentosTest {
                 () -> calculadora.calcularPrecioFinal(precio, 10));
         assertEquals("El precio original debe ser mayor que cero", e.getMessage());
     }
+    @Test
+    public void aplicarDescuentoPorCantidadAplicaDescuentoSiCantidadEsMayorA10() {
+        CalculadoraDescuentos calc = new CalculadoraDescuentos();
+        // 11 artículos a 100 cada uno = aplica 10% descuento -> 90.0
+        double resultado = calc.aplicarDescuentoPorCantidad(11, 100.0);
+        assertEquals(90.0, resultado, 0.001);
+    }
+
+    @Test
+    public void aplicarDescuentoPorCantidadNoAplicaDescuentoSiCantidadEs10oMenor() {
+        CalculadoraDescuentos calc = new CalculadoraDescuentos();
+        // 10 artículos a 100 cada uno = NO aplica descuento -> 100.0
+        double resultado = calc.aplicarDescuentoPorCantidad(10, 100.0);
+        assertEquals(100.0, resultado, 0.001);
+    }
 }
