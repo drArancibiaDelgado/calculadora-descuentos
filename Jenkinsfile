@@ -19,17 +19,17 @@ pipeline {
     stages {
         stage('Compilar') {
             steps {
-                bat 'mvn -B clean compile'
+                sh 'mvn -B clean compile'
             }
         }
         stage('Pruebas') {
             steps {
-                bat 'mvn -B test -Dmaven.test.failure.ignore=true'
+                sh 'mvn -B test -Dmaven.test.failure.ignore=true'
             }
         }
         stage('Empaquetar') {
             steps {
-                bat 'mvn -B -DskipTests package'
+                sh 'mvn -B -DskipTests package'
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
